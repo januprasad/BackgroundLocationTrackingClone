@@ -8,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -21,6 +22,10 @@ import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.github.januprasad.backgroundlocationtracking.ui.theme.BackgroundLocationTrackingTheme
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.flow.collectLatest
 
 class MainActivity : ComponentActivity() {
@@ -48,10 +53,22 @@ class MainActivity : ComponentActivity() {
             remember {
                 mutableStateOf(Pair("Fetching", "Fetching"))
             }
+        val cameraPositionState = rememberCameraPositionState()
+        cameraPositionState.position.target
+        val zoomLevel = 1.0f
         LaunchedEffect(true) {
             viewModel.startLocationUpdates(c)
             viewModel.mutableSharedFlow.collectLatest { data ->
                 state.value = data
+                val newPosition =
+                    CameraPosition.fromLatLngZoom(
+                        LatLng(
+                            data.first.toDouble(),
+                            data.second.toDouble(),
+                        ),
+                        zoomLevel,
+                    )
+                cameraPositionState.position = newPosition
             }
         }
         Column(
@@ -76,6 +93,9 @@ class MainActivity : ComponentActivity() {
                 }
             }) {
                 Text(text = "Stop")
+            }
+
+            GoogleMap(modifier = Modifier.fillMaxWidth(), cameraPositionState = cameraPositionState) {
             }
         }
     }

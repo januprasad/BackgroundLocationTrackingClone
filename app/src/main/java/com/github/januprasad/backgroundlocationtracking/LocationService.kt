@@ -63,8 +63,8 @@ class LocationService : Service() {
             .catch { e -> e.printStackTrace() }
             .onEach { location ->
                 repository.updateLocation(location)
-                val lat = location.latitude.toString().takeLast(3)
-                val long = location.longitude.toString().takeLast(3)
+                val lat = location.latitude.toString()
+                val long = location.longitude.toString()
                 val updatedNotification =
                     notification.setContentText(
                         "Location: ($lat, $long)",

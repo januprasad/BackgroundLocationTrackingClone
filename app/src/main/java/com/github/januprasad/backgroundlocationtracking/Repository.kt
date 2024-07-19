@@ -13,8 +13,8 @@ class Repository private constructor(
     val locationChannel = Channel<Pair<String, String>>()
 
     fun updateLocation(location: Location) {
-        val lat = location.latitude.toString().takeLast(3)
-        val long = location.longitude.toString().takeLast(3)
+        val lat = location.latitude.toString()
+        val long = location.longitude.toString()
         CoroutineScope(Dispatchers.IO).launch {
             locationChannel.send(Pair(lat, long))
         }

@@ -18,6 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BackgroundLocationTracking">
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="" />
         <service android:name=".LocationService" android:foregroundServiceType="location" />
         <activity
             android:name=".MainActivity"

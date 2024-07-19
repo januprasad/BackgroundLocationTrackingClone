@@ -70,4 +70,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     // Location Services
     implementation(libs.play.services.location)
+    //maps
+    implementation(libs.maps.compose)
+    implementation(libs.play.services.maps)
 }
