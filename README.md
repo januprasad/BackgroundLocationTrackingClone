@@ -1,4 +1,4 @@
 # Sample Maps App using
-# Compose
-# Corourtines
-# Services
+Compose
+Corourtines
+Services
